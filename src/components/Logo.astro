@@ -1,0 +1,22 @@
+---
+interface Props {
+  size?: number;
+  /** Inverted mark for use on the dark green footer. */
+  inverse?: boolean;
+}
+
+const { size = 38, inverse = false } = Astro.props;
+const plate = inverse ? '#fffdf8' : '#1e3d2f';
+const squares = inverse ? '#14291f' : '#faf6ee';
+---
+
+<svg width={size} height={size} viewBox="0 0 36 36" aria-hidden="true">
+  <rect width="36" height="36" rx="8" fill={plate} />
+  <g fill={squares}>
+    <rect x="8" y="8" width="6.5" height="6.5" />
+    <rect x="21.5" y="8" width="6.5" height="6.5" />
+    <rect x="14.75" y="14.75" width="6.5" height="6.5" />
+    <rect x="8" y="21.5" width="6.5" height="6.5" />
+    <rect x="21.5" y="21.5" width="6.5" height="6.5" />
+  </g>
+</svg>

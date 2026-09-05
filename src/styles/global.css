@@ -1,0 +1,346 @@
+/* ---------------------------------------------------------------
+   Swale Chess Club — design tokens
+   Warm parchment + board green, brass accents.
+   --------------------------------------------------------------- */
+:root {
+  --c-bg: #faf6ee;
+  --c-surface: #ffffff;
+  --c-surface-warm: #fffdf8;
+  --c-surface-alt: #f4efe2;
+  --c-border: #e3dccb;
+  --c-border-strong: #d6cdb8;
+
+  --c-ink: #1a1815;
+  --c-ink-soft: #56514a;
+  --c-ink-faint: #857e73;
+
+  --c-green: #1e3d2f;
+  --c-green-deep: #14291f;
+  --c-green-line: #2a4436;
+  --c-green-soft: #edf2ee;
+  --c-on-green: #fffdf8;
+  --c-on-green-soft: #c3d4c7;
+  --c-on-green-faint: #96ae9e;
+
+  --c-brass: #a8792b;
+  --c-brass-light: #c6a45e;
+
+  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+
+  --step-0: 1.0625rem;
+  --step-1: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
+  --step-2: clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
+  --step-3: clamp(1.75rem, 1.45rem + 1.4vw, 2.625rem);
+  --step-4: clamp(2.25rem, 1.4rem + 4vw, 5.375rem);
+
+  --wrap: 1180px;
+  --measure: 66ch;
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  --shadow-sm: 0 1px 2px rgb(20 41 31 / 0.05), 0 2px 8px rgb(20 41 31 / 0.04);
+  --shadow-lg: 0 28px 64px rgb(20 41 31 / 0.18);
+}
+
+/* --------------------------------- reset -------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+svg { flex-shrink: 0; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  color: var(--c-green-deep);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-4); line-height: 1.08; }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+h4 { font-size: var(--step-1); }
+
+p, li { text-wrap: pretty; }
+
+a {
+  color: var(--c-green);
+  text-decoration: none;
+}
+
+a:hover { color: var(--c-brass); }
+
+ul, ol { padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 3px solid var(--c-brass);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ------------------------------- layout --------------------------------- */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: 2.5rem;
+}
+
+.section { padding-block: clamp(3.5rem, 2rem + 5vw, 5.5rem); }
+.section--warm { background: var(--c-surface-warm); border-bottom: 1px solid var(--c-border); }
+.section--alt { background: var(--c-surface-alt); border-block: 1px solid var(--c-border); }
+.section--green { background: var(--c-green); }
+
+.stack { display: flex; flex-direction: column; }
+.grid { display: grid; gap: 1.375rem; }
+
+@media (min-width: 640px) {
+  .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+  .grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 899px) {
+  .grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 639px) {
+  .grid--4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ------------------------------ typography ------------------------------ */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-brass);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 44px;
+  height: 2px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.eyebrow--plain { display: block; }
+.eyebrow--plain::before { content: none; }
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--c-ink-soft);
+  max-width: var(--measure);
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 42rem;
+}
+
+.muted { color: var(--c-ink-faint); }
+.small { font-size: 0.9375rem; }
+
+/* ------------------------------- buttons -------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 52px;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn--primary { background: var(--c-green); color: var(--c-on-green); }
+.btn--primary:hover { background: var(--c-green-deep); color: var(--c-on-green); }
+
+.btn--outline {
+  background: var(--c-surface);
+  border-color: var(--c-border-strong);
+  color: var(--c-green);
+}
+
+.btn--outline:hover { border-color: var(--c-green); color: var(--c-green); }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+/* -------------------------------- cards --------------------------------- */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card--warm { background: var(--c-surface-warm); }
+
+.card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  background: var(--c-green-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-green);
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-brass);
+}
+
+.tag--solid {
+  color: var(--c-on-green);
+  background: var(--c-green);
+  padding: 0.3125rem 0.625rem;
+  border-radius: 5px;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--c-ink-faint);
+}
+
+/* -------------------------------- prose --------------------------------- */
+.prose { max-width: var(--measure); }
+.prose > * + * { margin-top: 1rem; }
+
+.prose h2 { font-size: var(--step-2); margin-top: 2.5rem; }
+.prose h3 { font-size: var(--step-1); margin-top: 1.75rem; }
+
+.prose ul, .prose ol { padding-left: 1.25rem; list-style: revert; }
+.prose li + li { margin-top: 0.3rem; }
+.prose strong { color: var(--c-green-deep); font-weight: 600; }
+
+.prose a { text-decoration: underline; text-underline-offset: 0.18em; }
+
+.table-scroll { overflow-x: auto; }
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prose :where(th, td) {
+  border-bottom: 1px solid var(--c-border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.prose th { background: var(--c-green-soft); font-weight: 600; }
+
+/* ------------------------------ on-green -------------------------------- */
+.on-green, .on-green h1, .on-green h2, .on-green h3 { color: var(--c-on-green); }
+.on-green p { color: var(--c-on-green-soft); }
+.on-green .eyebrow { color: var(--c-brass-light); }
+.on-green a { color: var(--c-on-green); }
+.on-green a:hover { color: var(--c-brass-light); }
+
+/* ---------------------------- checker band ------------------------------ */
+.checker-band {
+  height: 14px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--c-green-deep) 0 28px,
+    var(--c-brass) 28px 56px
+  );
+}
+
+/* ------------------------------ utilities ------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--c-green);
+  color: var(--c-on-green);
+  padding: 0.75rem 1.25rem;
+}
+
+.skip-link:focus { left: 0; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

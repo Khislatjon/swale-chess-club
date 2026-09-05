@@ -1,0 +1,464 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FactsStrip from '../components/FactsStrip.astro';
+import NewsCard from '../components/NewsCard.astro';
+import Icon from '../components/Icon.astro';
+import { club, congresses } from '../data/club';
+import { withBase } from '../lib/url';
+
+const posts = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const latest = posts.slice(0, 3);
+
+const formats = [
+  {
+    icon: 'trophy' as const,
+    title: 'Club Championship',
+    body: 'Our main all-play-all competition, running from autumn through to summer. Keith Nevols is the reigning 2025–26 champion.',
+  },
+  {
+    icon: 'rapid' as const,
+    title: 'Rapid & blitz',
+    body: 'A group-stage rapid championship feeding into knockout quarter-finals, plus a blitz night to close the season.',
+  },
+  {
+    icon: 'ladder' as const,
+    title: 'The ladder',
+    body: "Challenge anyone near you on the ladder and climb. The easiest way in if you'd rather not commit to a full tournament.",
+  },
+  {
+    icon: 'league' as const,
+    title: 'League & county',
+    body: 'We field teams in the Kent leagues, and members play for the county — Kent won the U1650 national final in 2026.',
+  },
+];
+---
+
+<BaseLayout
+  title={club.name}
+  description="Swale Chess Club meets every Thursday from 7.40pm at The Artisan Room, Sittingbourne, Kent. Championships, rapid tournaments, a members' ladder and league matches — new members always welcome."
+>
+  <!-- Hero -->
+  <section class="section section--warm hero">
+    <div class="wrap hero__inner">
+      <p class="eyebrow">Thursday nights in Sittingbourne</p>
+      <h1 class="hero__title">Chess for everyone, from novice to expert.</h1>
+
+      <div class="hero__body">
+        <p class="hero__lede">
+          We meet every Thursday evening at The Artisan Room. Club championships,
+          rapid tournaments, a members' ladder and league matches across Kent —
+          plus plenty of casual games for anyone who just fancies a game.
+        </p>
+        <div class="hero__actions">
+          <div class="btn-row">
+            <a href={withBase('/join/')} class="btn btn--primary">
+              Join us
+              <Icon name="arrow" size={18} />
+            </a>
+            {
+              latest[0] && (
+                <a href={withBase(`/news/${latest[0].id}/`)} class="btn btn--outline">
+                  Latest report
+                </a>
+              )
+            }
+          </div>
+          <p class="small muted">
+            New members always welcome — there's no need to book.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FactsStrip />
+
+  <!-- What we play -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What we play</p>
+        <h2>Four ways to get a game</h2>
+        <p class="lede">
+          Whatever you're after — a serious season-long campaign or a friendly
+          game and a chat — there's a place for you on a Thursday.
+        </p>
+      </div>
+
+      <div class="grid grid--4 formats">
+        {
+          formats.map((format) => (
+            <div class="card">
+              <div class="card__icon">
+                <Icon name={format.icon} size={20} />
+              </div>
+              <h3>{format.title}</h3>
+              <p class="card__body">{format.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest news -->
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="news-head">
+        <div class="section-head">
+          <p class="eyebrow">Club reports</p>
+          <h2>Latest from the club</h2>
+          <p class="lede">
+            Results, match reports and the odd puzzle — written up after most
+            club nights.
+          </p>
+        </div>
+        <a href={withBase('/news/')} class="btn btn--outline btn--nowrap">
+          All reports
+          <Icon name="arrowSmall" size={17} />
+        </a>
+      </div>
+
+      <div class="grid grid--3 news-grid">
+        {
+          latest.map((post, i) => (
+            <NewsCard
+              href={withBase(`/news/${post.id}/`)}
+              title={post.data.title}
+              date={post.data.date}
+              summary={post.data.summary}
+              latest={i === 0}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Juniors -->
+  <section class="section">
+    <div class="wrap juniors">
+      <div class="photo-slot">
+        <Icon name="image" size={46} />
+        <p>Junior club night<br />— photograph to follow</p>
+      </div>
+
+      <div class="juniors__text">
+        <p class="eyebrow">Swale Junior Chess Club</p>
+        <h2>The ultimate level playground</h2>
+        <p class="lede">
+          Chess can be played on equal terms by everyone — there's no advantage
+          in being a girl or a boy, young or old, large or small. Our junior club
+          meets on Thursdays from <strong>6.15pm to 7.30pm</strong> and caters for
+          every young player, from complete novice to budding world champion.
+        </p>
+        <div class="callout">
+          <p>
+            <strong>Now partnered with LearnChess Academy.</strong> Structured
+            coaching and a clear path to improve, alongside the club night.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a href={withBase('/juniors/')} class="btn btn--primary">
+            About the junior club
+            <Icon name="arrow" size={18} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's on -->
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What's on</p>
+        <h2>Congresses around Kent</h2>
+        <p class="lede">
+          Weekend tournaments our members regularly play in. Entries go through
+          the organisers.
+        </p>
+      </div>
+
+      <div class="congresses">
+        {
+          congresses.map((congress) => (
+            <article class="congress card card--warm">
+              <div class="congress__date">
+                <span class="congress__days">{congress.dayRange}</span>
+                <span class="congress__month">{congress.monthYear}</span>
+              </div>
+              <div class="congress__detail">
+                <h3>{congress.name}</h3>
+                <p>{congress.venue} · {congress.format}</p>
+              </div>
+              <a href={congress.href} class="btn btn--outline btn--nowrap" rel="noopener">
+                Details
+                <Icon name="external" size={15} />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Join -->
+  <section class="section section--green on-green">
+    <div class="wrap join">
+      <div class="join__text">
+        <p class="eyebrow">Join us</p>
+        <h2>New members always welcome</h2>
+        <p>
+          Come along on any Thursday from 7.40pm — no need to book, and no need
+          to be any good. Bring nothing but yourself; we have the boards, clocks
+          and sets.
+        </p>
+        <p>
+          Annual subscription is <strong>{club.membership.annualFee}</strong>,
+          which includes your Bronze registration with the ECF so you can play
+          rated games and league matches.
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Get in touch</h3>
+        <div class="contact-card__list">
+          <div class="contact-item">
+            <Icon name="mail" size={21} />
+            <div>
+              <span class="contact-item__label">Email</span>
+              <a href={`mailto:${club.contact.email}`}>{club.contact.email}</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <Icon name="phone" size={21} />
+            <div>
+              <span class="contact-item__label">Phone</span>
+              <a href={club.contact.phoneHref}>{club.contact.phone}</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <Icon name="facebook" size={21} />
+            <div>
+              <span class="contact-item__label">Facebook</span>
+              <a href={club.contact.facebook} rel="noopener">Swale Chess Club group</a>
+            </div>
+          </div>
+        </div>
+        <a href={`mailto:${club.contact.email}`} class="btn btn--primary">
+          Email the club
+          <Icon name="arrow" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+  }
+
+  .hero__title { max-width: 15em; }
+
+  .hero__body {
+    display: grid;
+    gap: 2.5rem;
+    padding-top: 0.375rem;
+  }
+
+  @media (min-width: 900px) {
+    .hero__body {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 4.5rem;
+      align-items: end;
+    }
+  }
+
+  .hero__lede {
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--c-ink-soft);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .formats { margin-top: 3rem; }
+  .card__body { font-size: 1rem; color: var(--c-ink-soft); }
+
+  .news-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem;
+    margin-bottom: 2.75rem;
+  }
+
+  .btn--nowrap { white-space: nowrap; }
+  .news-grid { align-items: stretch; }
+
+  .juniors {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .juniors {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 4rem;
+    }
+  }
+
+  .juniors__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.375rem;
+  }
+
+  .photo-slot {
+    min-height: 380px;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-green-soft);
+    color: #8aa795;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.875rem;
+    text-align: center;
+  }
+
+  .photo-slot p {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #6c8577;
+  }
+
+  .callout {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-left: 4px solid var(--c-brass);
+    border-radius: 12px;
+    padding: 1.375rem 1.5rem;
+  }
+
+  .callout p { font-size: 1rem; color: var(--c-ink-soft); }
+
+  .congresses {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .congress {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.875rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .congress {
+      grid-template-columns: 168px minmax(0, 1fr) auto;
+      gap: 2rem;
+    }
+
+    .congress__date {
+      border-right: 1px solid var(--c-border);
+      padding-right: 1.5rem;
+    }
+  }
+
+  .congress__date { display: flex; flex-direction: column; gap: 0.125rem; }
+
+  .congress__days {
+    font-family: var(--font-display);
+    font-size: 2.125rem;
+    font-weight: 600;
+    color: var(--c-green-deep);
+    line-height: 1;
+  }
+
+  .congress__month {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-brass);
+  }
+
+  .congress__detail { display: flex; flex-direction: column; gap: 0.4375rem; }
+  .congress__detail p { font-size: 1rem; color: var(--c-ink-soft); }
+
+  .join {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .join {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 4.5rem;
+    }
+  }
+
+  .join__text { display: flex; flex-direction: column; gap: 1.375rem; }
+  .join__text p { font-size: var(--step-1); line-height: 1.55; }
+  .join__text strong { color: var(--c-on-green); font-weight: 600; }
+
+  .contact-card {
+    background: var(--c-surface-warm);
+    border-radius: 16px;
+    padding: 2.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.375rem;
+  }
+
+  .contact-card h3 { color: var(--c-green-deep); }
+
+  .contact-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    color: var(--c-brass);
+  }
+
+  .contact-item > div { display: flex; flex-direction: column; }
+
+  .contact-item__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-ink-faint);
+  }
+
+  .contact-item a {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--c-green);
+  }
+
+  .contact-item a:hover { color: var(--c-brass); }
+</style>

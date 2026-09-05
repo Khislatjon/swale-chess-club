@@ -1,0 +1,313 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { club } from '../data/club';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Learn the game properly',
+    body: 'From how the pieces move to real openings, tactics and endgames — taught in the right order, at the right pace.',
+  },
+  {
+    n: '02',
+    title: 'Play real games',
+    body: 'Games against other juniors every week, with helpful advice on hand whenever it is wanted.',
+  },
+  {
+    n: '03',
+    title: 'Move up to the senior club',
+    body: "When they're ready, juniors join the adult club night, the ladder and eventually our league teams.",
+  },
+];
+
+const photos = [
+  'Chess games can quickly turn into serious battles.',
+  "And they're always great fun.",
+  "There's always plenty of helpful advice and tuition.",
+];
+---
+
+<BaseLayout
+  title="Junior chess club"
+  description="Swale Junior Chess Club meets Thursdays 6.15–7.30pm in Sittingbourne, for young players from complete novice to budding world champion. Now partnered with LearnChess Academy."
+>
+  <section class="section section--warm">
+    <div class="wrap juniors-hero">
+      <div class="juniors-hero__text">
+        <p class="eyebrow">Swale Junior Chess Club</p>
+        <h1>The ultimate level playground</h1>
+        <p class="lede">
+          Chess is an art, a science and a sport that can be played on equal
+          terms by everyone. There's no advantage in being a girl or a boy, young
+          or old, large or small. Chess is only limited by your imagination.
+        </p>
+        <div class="btn-row">
+          <a href={`mailto:${club.contact.email}`} class="btn btn--primary">
+            Bring your child along
+            <Icon name="arrow" size={18} />
+          </a>
+          <a href={club.contact.phoneHref} class="btn btn--outline">Ask a question</a>
+        </div>
+      </div>
+
+      <div class="night-card on-green">
+        <h2>Junior club night</h2>
+        <div class="night-card__list">
+          <div class="night-item">
+            <Icon name="clock" size={21} />
+            <div>
+              <span class="night-item__label">When</span>
+              <span class="night-item__value">Thursdays, 6.15–7.30pm</span>
+            </div>
+          </div>
+          <div class="night-item">
+            <Icon name="pin" size={21} />
+            <div>
+              <span class="night-item__label">Where</span>
+              <span class="night-item__value">
+                {club.venue.name}, {club.venue.building},<br />
+                {club.venue.street}, {club.venue.town} {club.venue.postcode}
+              </span>
+            </div>
+          </div>
+          <div class="night-item">
+            <Icon name="users" size={21} />
+            <div>
+              <span class="night-item__label">Who for</span>
+              <span class="night-item__value">Novices to budding world champions</span>
+            </div>
+          </div>
+        </div>
+        <p class="night-card__note">
+          Not sure if it's right for your child? Come and watch a session first —
+          you're very welcome to.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">All change at the junior club</p>
+        <h2>Now partnered with LearnChess Academy</h2>
+        <p class="lede">
+          Exciting new developments for junior players: structured coaching, a
+          clear path to improve, and proper tuition alongside the club night. If
+          your child has an interest in chess, this is the place to start.
+        </p>
+      </div>
+
+      <div class="grid grid--3 steps">
+        {
+          steps.map((step) => (
+            <div class="card card--warm">
+              <span class="step__n">{step.n}</span>
+              <h3>{step.title}</h3>
+              <p class="step__body">{step.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="photos-head">A Thursday evening at the junior club</h2>
+      <div class="grid grid--3">
+        {
+          photos.map((caption) => (
+            <figure class="photo-figure">
+              <div class="photo-slot">
+                <Icon name="image" size={38} />
+                <span>Photograph to follow</span>
+              </div>
+              <figcaption>{caption}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="small muted photo-credit">
+        Photographs by Susie at Bananashed Photography.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--green on-green">
+    <div class="wrap juniors-contact">
+      <div class="juniors-contact__text">
+        <h2>New members always welcome</h2>
+        <p>
+          For information about Swale Junior Chess Club, email us, call, or just
+          come along on a Thursday evening from 6.15pm.
+        </p>
+      </div>
+      <div class="juniors-contact__links">
+        <a href={`mailto:${club.contact.email}`} class="contact-tile">
+          <Icon name="mail" size={22} />
+          <span>{club.contact.email}</span>
+        </a>
+        <a href={club.contact.phoneHref} class="contact-tile">
+          <Icon name="phone" size={22} />
+          <span>{club.contact.phone}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .juniors-hero {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .juniors-hero {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 4.25rem;
+    }
+  }
+
+  .juniors-hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .night-card {
+    background: var(--c-green);
+    border-radius: 16px;
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .night-card h2 { font-size: var(--step-2); }
+
+  .night-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .night-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    color: var(--c-brass-light);
+    padding-bottom: 1.125rem;
+    border-bottom: 1px solid var(--c-green-line);
+  }
+
+  .night-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .night-item > div { display: flex; flex-direction: column; }
+
+  .night-item__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-on-green-faint);
+  }
+
+  .night-item__value {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--c-on-green);
+    line-height: 1.45;
+  }
+
+  .night-card__note {
+    font-size: 0.9375rem;
+    border-top: 1px solid var(--c-green-line);
+    padding-top: 1.125rem;
+  }
+
+  .steps { margin-top: 2.5rem; }
+
+  .step__n {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: var(--c-brass);
+    line-height: 1;
+  }
+
+  .step__body { font-size: 1rem; color: var(--c-ink-soft); }
+
+  .photos-head { margin-bottom: 2rem; }
+
+  .photo-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .photo-slot {
+    min-height: 250px;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-green-soft);
+    color: #8aa795;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+  }
+
+  .photo-slot span {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6c8577;
+  }
+
+  .photo-figure figcaption { font-size: 1rem; color: var(--c-ink-soft); }
+  .photo-credit { margin-top: 1.5rem; }
+
+  .juniors-contact {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .juniors-contact {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 4.25rem;
+    }
+  }
+
+  .juniors-contact__text { display: flex; flex-direction: column; gap: 1.125rem; }
+  .juniors-contact__text p { font-size: var(--step-1); line-height: 1.55; }
+
+  .juniors-contact__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .contact-tile {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    background: var(--c-surface-warm);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    color: var(--c-brass);
+  }
+
+  .contact-tile span {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--c-green-deep);
+  }
+
+  .contact-tile:hover span { color: var(--c-brass); }
+</style>

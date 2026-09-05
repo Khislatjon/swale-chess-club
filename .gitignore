@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env
+.env.production
+npm-debug.log*
+
+# Local tool/editor config — not part of the site
+.claude/
+.vscode/
+.idea/

@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  summary: string;
+  latest?: boolean;
+}
+
+const { href, title, date, summary, latest = false } = Astro.props;
+
+const formatted = date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<article class="card news-card">
+  <div class="meta-row">
+    {latest && <span class="tag tag--solid">Latest</span>}
+    <time datetime={date.toISOString().slice(0, 10)}>{formatted}</time>
+  </div>
+  <h3 class="news-card__title">
+    <a href={href}>{title}</a>
+  </h3>
+  <p class="news-card__summary">{summary}</p>
+  <a href={href} class="link-arrow">
+    Read the report
+    <Icon name="arrowSmall" size={16} />
+  </a>
+</article>
+
+<style>
+  .news-card { gap: 0.875rem; padding: 1.875rem; }
+
+  .news-card__title a { color: inherit; }
+  .news-card__title a:hover { color: var(--c-brass); }
+
+  .news-card__summary {
+    font-size: 1rem;
+    color: var(--c-ink-soft);
+    flex-grow: 1;
+  }
+</style>

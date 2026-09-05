@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { congresses } from '../data/club';
+
+const lmsUrl = 'https://lms.englishchess.org.uk/lms/index.php/organisation/1068';
+
+// The club's own competitions, run across the season.
+const clubTournaments = [
+  {
+    name: 'Club Championship',
+    body: 'Our main all-play-all competition, running from autumn through to summer. Keith Nevols is the reigning 2025–26 champion.',
+  },
+  {
+    name: 'Second Tournament',
+    body: 'The companion competition to the championship. Congratulations to Joe Eagle, winner in 2025–26.',
+  },
+  {
+    name: 'Rapid Chess Championship',
+    body: 'Played for the Tyrone Jefferies Cup — group stages through the season, then knockout quarter-finals.',
+  },
+  {
+    name: 'Blitz Championship',
+    body: 'A one-night tournament to close the season. David Page and Keith Nevols were joint winners in 2026.',
+  },
+  {
+    name: 'The Ladder',
+    body: 'Runs all season — challenge anyone near you on the ladder and climb.',
+  },
+];
+
+// Congresses are listed in date order, soonest first.
+const upcoming = [...congresses].sort((a, b) =>
+  a.startDate.localeCompare(b.startDate),
+);
+---
+
+<BaseLayout
+  title="Tournaments"
+  description="The competitions Swale Chess Club runs across the season — championship, rapid, blitz and ladder — plus upcoming congresses in Kent."
+>
+  <section class="section section--warm">
+    <div class="wrap page-head">
+      <p class="eyebrow">Tournaments</p>
+      <h1>Something to play for</h1>
+      <p class="lede">
+        The club runs its own competitions all season long, and our members
+        regularly play in weekend congresses around Kent.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Club tournaments</h2>
+        <p class="lede">
+          Five competitions run at the club across the season — there's a board
+          for every appetite, from a season-long campaign to a single evening of
+          blitz.
+        </p>
+      </div>
+
+      <div class="grid grid--3 club-comps">
+        {
+          clubTournaments.map((comp) => (
+            <div class="card">
+              <h3>{comp.name}</h3>
+              <p class="club-comp__body">{comp.body}</p>
+            </div>
+          ))
+        }
+        <div class="card card--lms">
+          <h3>Results &amp; tables</h3>
+          <p class="club-comp__body">
+            Every result, fixture and table — club and league — is published on
+            the ECF League Management System.
+          </p>
+          <a href={lmsUrl} class="link-arrow" rel="noopener">
+            All Swale Chess Club results
+            <Icon name="external" size={15} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Coming up in Kent</h2>
+        <p class="lede">
+          Weekend congresses our members play in. Entries go through the
+          organisers — follow the link on each for full details and entry forms.
+        </p>
+      </div>
+
+      <div class="tournaments">
+        {
+          upcoming.map((event) => (
+            <article class="tournament card card--warm">
+              <div class="tournament__date">
+                <span class="tournament__days">{event.dayRange}</span>
+                <span class="tournament__month">{event.monthYear}</span>
+              </div>
+              <div class="tournament__detail">
+                <h3>{event.name}</h3>
+                <p class="tournament__dates">{event.dates}</p>
+                <p class="tournament__venue">{event.venue}</p>
+                <p>{event.format}</p>
+              </div>
+              <a href={event.href} class="btn btn--outline btn--nowrap" rel="noopener">
+                Details &amp; entry
+                <Icon name="external" size={15} />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="small muted tournaments__note">
+        Playing in one of these? Let us know and we'll mention it in the club
+        report.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .club-comps {
+    margin-top: 2.5rem;
+  }
+
+  .club-comp__body {
+    font-size: 1rem;
+    color: var(--c-ink-soft);
+    flex-grow: 1;
+  }
+
+  .card--lms {
+    background: var(--c-green-soft);
+    border-color: #d4e0d7;
+  }
+
+  .card--lms .club-comp__body {
+    color: #4a5f51;
+  }
+
+  .tournaments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .tournament {
+    display: grid;
+    gap: 1.5rem;
+    padding: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .tournament {
+      grid-template-columns: 168px minmax(0, 1fr) auto;
+      gap: 2rem;
+    }
+
+    .tournament__date {
+      border-right: 1px solid var(--c-border);
+      padding-right: 1.5rem;
+    }
+  }
+
+  .tournament__date {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .tournament__days {
+    font-family: var(--font-display);
+    font-size: 2.125rem;
+    font-weight: 600;
+    color: var(--c-green-deep);
+    line-height: 1;
+  }
+
+  .tournament__month {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-brass);
+  }
+
+  .tournament__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4375rem;
+  }
+
+  .tournament__detail p {
+    font-size: 1rem;
+    color: var(--c-ink-soft);
+  }
+
+  .tournament__detail .tournament__dates {
+    font-weight: 600;
+    color: var(--c-green-deep);
+  }
+
+  .tournament__detail .tournament__venue {
+    color: var(--c-ink);
+  }
+
+  .btn--nowrap {
+    white-space: nowrap;
+  }
+
+  .tournaments__note {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--c-border);
+  }
+</style>

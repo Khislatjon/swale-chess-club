@@ -1,0 +1,138 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { withBase } from '../../lib/url';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection('news');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const all = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const index = all.findIndex((p) => p.id === post.id);
+const newer = index > 0 ? all[index - 1] : undefined;
+const older = index < all.length - 1 ? all[index + 1] : undefined;
+
+const formatted = post.data.date.toLocaleDateString('en-GB', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={post.data.title} description={post.data.summary}>
+  <article class="report">
+    <header class="section section--warm">
+      <div class="wrap report__head">
+        <a href={withBase('/news/')} class="link-arrow back-link">
+          <Icon name="arrowSmall" size={16} class="flip" />
+          All club reports
+        </a>
+        <time datetime={post.data.date.toISOString().slice(0, 10)} class="report__date">
+          {formatted}
+        </time>
+        <h1>{post.data.title}</h1>
+        <p class="lede">{post.data.summary}</p>
+      </div>
+    </header>
+
+    <div class="wrap report__body">
+      <div class="prose table-scroll">
+        <Content />
+      </div>
+
+      <nav class="report__nav" aria-label="More reports">
+        {
+          newer ? (
+            <a href={withBase(`/news/${newer.id}/`)} class="report__nav-link">
+              <span class="report__nav-label">Newer report</span>
+              <span class="report__nav-title">{newer.data.title}</span>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          older && (
+            <a href={withBase(`/news/${older.id}/`)} class="report__nav-link report__nav-link--end">
+              <span class="report__nav-label">Older report</span>
+              <span class="report__nav-title">{older.data.title}</span>
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .report__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Constrain the text, not the .wrap itself — .wrap is auto-centred, so a
+     max-width here would push the header inward from the page's content edge. */
+  .report__head h1,
+  .report__head .lede {
+    max-width: 52rem;
+  }
+
+  .report__head h1 { font-size: var(--step-3); }
+
+  .back-link { font-size: 0.9375rem; color: var(--c-ink-soft); }
+  .back-link :global(.flip) { transform: rotate(180deg); }
+
+  .report__date {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--c-brass);
+  }
+
+  .report__body { padding-block: 3.5rem 4.5rem; }
+
+  .report__nav {
+    display: grid;
+    gap: 1rem;
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--c-border);
+  }
+
+  @media (min-width: 720px) {
+    .report__nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .report__nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.125rem 1.375rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    background: var(--c-surface);
+  }
+
+  .report__nav-link:hover { border-color: var(--c-green); }
+  .report__nav-link--end { text-align: right; }
+
+  .report__nav-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-brass);
+  }
+
+  .report__nav-title { font-weight: 500; color: var(--c-green-deep); }
+</style>

@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+import { club } from '../data/club';
+
+const facts = [
+  {
+    icon: 'clock' as const,
+    label: 'Club night',
+    lines: [`Thursdays from ${club.meets.time}`, club.meets.note],
+  },
+  {
+    icon: 'pin' as const,
+    label: 'Where',
+    lines: [
+      `${club.venue.name}, ${club.venue.building}, ${club.venue.street}, ${club.venue.town}, ${club.venue.county} ${club.venue.postcode}`,
+    ],
+  },
+  {
+    icon: 'users' as const,
+    label: 'Juniors',
+    lines: ['Thursdays 6.15–7.30pm', 'Ages and grades all welcome'],
+  },
+  {
+    icon: 'card' as const,
+    label: 'Membership',
+    lines: [`${club.membership.annualFee} a year`, `Includes ${club.membership.includes}`],
+  },
+];
+---
+
+<section class="facts">
+  <div class="wrap facts__grid">
+    {
+      facts.map((fact) => (
+        <div class="fact">
+          <Icon name={fact.icon} size={22} />
+          <p class="fact__label">{fact.label}</p>
+          <p class="fact__body">
+            {fact.lines.map((line, i) => (
+              <span class:list={['fact__line', { 'fact__line--soft': i > 0 }]}>{line}</span>
+            ))}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .facts {
+    background: var(--c-green);
+    color: var(--c-on-green);
+  }
+
+  .facts__grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 2.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .facts__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1020px) {
+    .facts__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    color: #a8c7b2;
+  }
+
+  .fact__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a8c7b2;
+  }
+
+  .fact__body {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: #f3f7f3;
+  }
+
+  .fact__line { display: block; }
+  .fact__line--soft { color: #a8c7b2; }
+</style>

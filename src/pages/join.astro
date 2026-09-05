@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FactsStrip from '../components/FactsStrip.astro';
+import Icon from '../components/Icon.astro';
+import { club, fullAddress } from '../data/club';
+
+const steps = [
+  {
+    title: 'Just turn up',
+    body: `Come along any Thursday from ${club.meets.time}. There's no need to book and no need to email first — though you're welcome to if you'd rather say hello in advance.`,
+  },
+  {
+    title: 'Play a few games',
+    body: "Your first few visits are informal. Play some casual games, meet people, and see whether the club suits you before committing to anything.",
+  },
+  {
+    title: 'Join the club',
+    body: `When you're ready, the annual subscription is ${club.membership.annualFee} and includes ${club.membership.includes}, so you can play rated games, club tournaments and league matches.`,
+  },
+];
+---
+
+<BaseLayout
+  title="Join us"
+  description={`New members are always welcome at Swale Chess Club. We meet Thursdays from ${club.meets.time} in Sittingbourne, Kent. Annual subscription ${club.membership.annualFee} including ECF registration.`}
+>
+  <section class="section section--warm">
+    <div class="wrap page-head">
+      <p class="eyebrow">Join us</p>
+      <h1>New members always welcome</h1>
+      <p class="lede">
+        You don't need to be any good, you don't need to bring anything, and you
+        don't need to know anyone. We have the boards, the clocks and the sets —
+        bring yourself and we'll find you a game.
+      </p>
+    </div>
+  </section>
+
+  <FactsStrip />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How to join</h2>
+      </div>
+      <ol class="grid grid--3 steps">
+        {
+          steps.map((step, i) => (
+            <li class="card">
+              <span class="step__n">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p class="step__body">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap find-us">
+      <div class="find-us__text">
+        <p class="eyebrow">Finding us</p>
+        <h2>The Artisan Room, Sittingbourne</h2>
+        <p class="lede">{fullAddress}</p>
+        <p class="lede">
+          The club runs from September through to the end of July.
+          {club.meets.note}
+        </p>
+        <div class="btn-row">
+          <a
+            class="btn btn--outline"
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`}
+            rel="noopener"
+          >
+            Open in maps
+            <Icon name="external" size={15} />
+          </a>
+        </div>
+      </div>
+
+      <div class="card contact-card">
+        <h3>Get in touch</h3>
+        <div class="contact-card__list">
+          <div class="contact-item">
+            <Icon name="mail" size={21} />
+            <div>
+              <span class="contact-item__label">Email</span>
+              <a href={`mailto:${club.contact.email}`}>{club.contact.email}</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <Icon name="phone" size={21} />
+            <div>
+              <span class="contact-item__label">Phone</span>
+              <a href={club.contact.phoneHref}>{club.contact.phone}</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <Icon name="facebook" size={21} />
+            <div>
+              <span class="contact-item__label">Facebook</span>
+              <a href={club.contact.facebook} rel="noopener">Swale Chess Club group</a>
+            </div>
+          </div>
+        </div>
+        <a href={`mailto:${club.contact.email}`} class="btn btn--primary">
+          Email the club
+          <Icon name="arrow" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { display: flex; flex-direction: column; gap: 1.125rem; }
+  .page-head h1 { max-width: 15em; }
+
+  .steps { margin-top: 2.5rem; list-style: none; }
+
+  .step__n {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: var(--c-brass);
+    line-height: 1;
+  }
+
+  .step__body { font-size: 1rem; color: var(--c-ink-soft); }
+
+  .find-us {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .find-us {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 4.5rem;
+    }
+  }
+
+  .find-us__text { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .contact-card { gap: 1.375rem; padding: 2.125rem; }
+
+  .contact-card__list { display: flex; flex-direction: column; gap: 1.125rem; }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    color: var(--c-brass);
+  }
+
+  .contact-item > div { display: flex; flex-direction: column; }
+
+  .contact-item__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-ink-faint);
+  }
+
+  .contact-item a { font-size: 1.0625rem; font-weight: 500; }
+</style>

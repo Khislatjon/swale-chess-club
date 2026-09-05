@@ -1,0 +1,71 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Homepage — desktop",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 4900
+    },
+    {
+      "file": "News.dc.html",
+      "title": "Club reports",
+      "x": 1580,
+      "y": 0,
+      "w": 1440,
+      "h": 2900
+    },
+    {
+      "file": "Juniors.dc.html",
+      "title": "Junior chess club",
+      "x": 3160,
+      "y": 0,
+      "w": 1440,
+      "h": 3100
+    },
+    {
+      "file": "Mobile.dc.html",
+      "title": "Homepage — mobile",
+      "x": 4740,
+      "y": 0,
+      "w": 390,
+      "h": 3800
+    },
+    {
+      "file": "DirectionB.dc.html",
+      "title": "Alt direction B — Bold & graphic",
+      "x": 1580,
+      "y": 3160,
+      "w": 1440,
+      "h": 820
+    },
+    {
+      "file": "DirectionC.dc.html",
+      "title": "Alt direction C — Quiet & typographic",
+      "x": 3160,
+      "y": 3360,
+      "w": 1440,
+      "h": 820
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-direction",
+      "x": 1580,
+      "y": 4120,
+      "w": 380,
+      "text": "Direction A (the four screens) is the one I'd ship: warm parchment + board green, serif headlines, checkerboard motif.\n\nB and C are hero-only alternates — say the word and I'll take the whole site that way instead."
+    },
+    {
+      "id": "note-photos",
+      "x": 3160,
+      "y": 4320,
+      "w": 380,
+      "text": "Photo slots are marked placeholders. Your existing club photos (and the Swale coat of arms) drop straight into these."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

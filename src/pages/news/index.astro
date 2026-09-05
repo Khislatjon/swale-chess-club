@@ -1,0 +1,194 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { withBase } from '../../lib/url';
+
+const posts = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const [featured, ...rest] = posts;
+
+const longDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const shortDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<BaseLayout
+  title="Club reports"
+  description="Results from the championship, the rapid groups and the ladder, match reports from our league fixtures, and puzzles contributed by members of Swale Chess Club."
+>
+  <section class="section section--warm">
+    <div class="wrap page-head">
+      <p class="eyebrow">Club reports</p>
+      <h1>What happened on Thursday</h1>
+      <p class="lede">
+        Results from the championship, the rapid groups and the ladder, match
+        reports from our league fixtures, and the occasional puzzle from members.
+      </p>
+    </div>
+  </section>
+
+  <div class="wrap news-layout">
+    <div class="news-list">
+      {
+        featured && (
+          <article class="card featured">
+            <div class="meta-row">
+              <span class="tag tag--solid">Latest</span>
+              <time datetime={featured.data.date.toISOString().slice(0, 10)}>
+                {longDate(featured.data.date)}
+              </time>
+            </div>
+            <h2><a href={withBase(`/news/${featured.id}/`)}>{featured.data.title}</a></h2>
+            <p class="featured__summary">{featured.data.summary}</p>
+            <a href={withBase(`/news/${featured.id}/`)} class="link-arrow">
+              Read the full report
+              <Icon name="arrowSmall" size={17} />
+            </a>
+          </article>
+        )
+      }
+
+      {
+        rest.map((post) => (
+          <article class="report-row">
+            <div class="report-row__date">
+              <time datetime={post.data.date.toISOString().slice(0, 10)}>
+                {shortDate(post.data.date)}
+              </time>
+            </div>
+            <div class="report-row__body">
+              <h3><a href={withBase(`/news/${post.id}/`)}>{post.data.title}</a></h3>
+              <p>{post.data.summary}</p>
+            </div>
+          </article>
+        ))
+      }
+
+      <p class="small muted news-count">
+        Showing all {posts.length} reports published on the new site.
+      </p>
+    </div>
+
+    <aside class="news-side">
+      <div class="card">
+        <h3>This season</h3>
+        <dl class="standings">
+          <div><dt>Club champion</dt><dd>Keith Nevols</dd></div>
+          <div><dt>Second tournament</dt><dd>Joe Eagle</dd></div>
+          <div><dt>Blitz</dt><dd>David &amp; Keith N</dd></div>
+        </dl>
+      </div>
+
+      <div class="card side-card--green">
+        <h3>Full fixtures &amp; tables</h3>
+        <p>
+          Every league result, fixture and table is published on the ECF League
+          Management System.
+        </p>
+        <a href="https://lms.englishchess.org.uk/lms/" class="link-arrow" rel="noopener">
+          Open the LMS
+          <Icon name="external" size={15} />
+        </a>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .page-head h1 { max-width: 16em; }
+
+  .news-layout {
+    display: grid;
+    gap: 4rem;
+    align-items: start;
+    padding-block: 3.5rem 4.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .news-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .featured { padding: 2.375rem 2.5rem; gap: 1rem; }
+  .featured h2 a { color: inherit; }
+  .featured h2 a:hover { color: var(--c-brass); }
+
+  .featured__summary {
+    font-size: var(--step-1);
+    color: var(--c-ink-soft);
+    line-height: 1.6;
+    max-width: 44em;
+  }
+
+  .report-row {
+    display: grid;
+    gap: 0.5rem;
+    border-top: 1px solid var(--c-border);
+    padding-top: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .report-row {
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 1.75rem;
+    }
+  }
+
+  .report-row__date time {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--c-green-deep);
+  }
+
+  .report-row__body { display: flex; flex-direction: column; gap: 0.5rem; }
+  .report-row__body h3 a { color: inherit; }
+  .report-row__body h3 a:hover { color: var(--c-brass); }
+  .report-row__body p { color: var(--c-ink-soft); }
+
+  .news-count { border-top: 1px solid var(--c-border); padding-top: 1.75rem; }
+
+  .news-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .standings { display: flex; flex-direction: column; gap: 0.8125rem; }
+
+  .standings > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding-bottom: 0.8125rem;
+    border-bottom: 1px solid #ede7d8;
+  }
+
+  .standings > div:last-child { border-bottom: none; padding-bottom: 0; }
+  .standings dt { color: var(--c-ink-soft); }
+  .standings dd { margin: 0; font-weight: 600; color: var(--c-green-deep); }
+
+  .side-card--green {
+    background: var(--c-green-soft);
+    border-color: #d4e0d7;
+  }
+
+  .side-card--green p { color: #4a5f51; }
+</style>

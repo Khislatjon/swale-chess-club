@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #14291F; color: #FFFDF8; font-family: 'IBM Plex Sans', -apple-system, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1, h2 { font-family: 'Newsreader', Georgia, serif; font-weight: 600; margin: 0; line-height: 1.02; letter-spacing: -0.03em; color: #FFFDF8; text-wrap: balance; }
+    p { margin: 0; text-wrap: pretty; }
+    a { color: #E5B96B; text-decoration: none; }
+    a:hover { color: #FFFDF8; }
+  </style>
+</helmet>
+
+<div style="background: #14291F; min-height: 820px; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 40px; max-width: 1280px; margin: 0 auto; width: 100%; padding: 26px 48px; box-sizing: border-box; border-bottom: 1px solid #2A4436;">
+    <span style="font-family: 'Newsreader', Georgia, serif; font-size: 23px; font-weight: 600; color: #FFFDF8; letter-spacing: -0.01em;">Swale Chess Club</span>
+    <nav style="display: flex; align-items: center; gap: 28px;">
+      <a href="#" style="font-size: 16px; color: #C3D4C7;">Home</a>
+      <a href="#" style="font-size: 16px; color: #C3D4C7;">News</a>
+      <a href="#" style="font-size: 16px; color: #C3D4C7;">Juniors</a>
+      <a href="#" style="font-size: 16px; color: #C3D4C7;">Join us</a>
+      <a href="#" style="display: inline-flex; align-items: center; padding: 13px 24px; background: #E5B96B; color: #14291F; border-radius: 4px; font-size: 16px; font-weight: 600;">Come along</a>
+    </nav>
+  </header>
+
+  <div style="flex-grow: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: stretch;">
+
+    <div style="display: flex; flex-direction: column; justify-content: center; gap: 30px; padding: 72px 48px 72px 80px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="width: 42px; height: 2px; background: #E5B96B;"></span>
+        <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #E5B96B;">Sittingbourne &middot; Kent</span>
+      </div>
+      <h1 style="font-size: 92px;">Thursday<br>night is<br><em style="font-style: italic; color: #E5B96B;">chess</em> night.</h1>
+      <p style="font-size: 20px; line-height: 1.5; color: #C3D4C7; max-width: 28em;">From absolute beginners to county players. Turn up at 7.40pm, grab a board, play someone.</p>
+      <div style="display: flex; align-items: center; gap: 16px; padding-top: 8px;">
+        <a href="#" style="display: inline-flex; align-items: center; padding: 18px 34px; background: #E5B96B; color: #14291F; border-radius: 4px; font-size: 18px; font-weight: 600;">Come along on Thursday</a>
+        <a href="#" style="display: inline-flex; align-items: center; padding: 18px 30px; border: 1px solid #3D5C4C; border-radius: 4px; font-size: 18px; font-weight: 600; color: #FFFDF8;">Latest results</a>
+      </div>
+    </div>
+
+    <div style="position: relative; background-color: #1E3D2F; background-image: linear-gradient(45deg, #14291F 25%, transparent 25%, transparent 75%, #14291F 75%), linear-gradient(45deg, #14291F 25%, transparent 25%, transparent 75%, #14291F 75%); background-size: 176px 176px; background-position: 0 0, 88px 88px; display: flex; align-items: flex-end; padding: 48px;">
+      <div style="background: #FFFDF8; padding: 26px 30px; max-width: 330px;">
+        <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #A8792B; margin-bottom: 8px;">Club champion 2025&ndash;26</p>
+        <p style="font-family: 'Newsreader', Georgia, serif; font-size: 32px; font-weight: 600; color: #14291F; line-height: 1.1;">Keith Nevols</p>
+        <p style="font-size: 15px; color: #56514A; margin-top: 8px;">Presented with the trophy at July's AGM by Chairman Mike.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

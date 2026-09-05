@@ -1,0 +1,22 @@
+{
+  "name": "swale-chess-club",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for Swale Chess Club, Sittingbourne, Kent",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "build:gh-pages": "DEPLOY_TARGET=gh-pages astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.1.1"
+  },
+  "engines": {
+    "node": ">=18.17.1"
+  }
+}

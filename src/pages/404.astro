@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { withBase } from '../lib/url';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page could not be found on the Swale Chess Club website."
+>
+  <section class="section section--warm">
+    <div class="wrap not-found">
+      <p class="eyebrow">Error 404</p>
+      <h1>That page has been captured</h1>
+      <p class="lede">
+        We couldn't find the page you were after. It may have moved when the site
+        was rebuilt.
+      </p>
+      <div class="btn-row">
+        <a href={withBase('/')} class="btn btn--primary">
+          Back to the home page
+          <Icon name="arrow" size={18} />
+        </a>
+        <a href={withBase('/news/')} class="btn btn--outline">Club reports</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-block: 3rem;
+  }
+
+  .not-found h1,
+  .not-found .lede {
+    max-width: 40rem;
+  }
+</style>
